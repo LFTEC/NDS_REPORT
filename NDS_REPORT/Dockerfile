@@ -4,15 +4,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 USER root
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
-    libc6 \
-    libicu-dev \
-    libfontconfig1 \
-    libfreetype6 \
-    libharfbuzz0b \
-    libpng16-16 \
-    libjpeg62-turbo \
-    libcups2 \
+RUN apt-get install -y libc6 libicu-dev libfontconfig1 \
     fontconfig \
     && rm -rf /var/lib/apt/lists/*
 COPY ["NDS_REPORT/fonts/*", "/usr/local/share/fonts/"]
