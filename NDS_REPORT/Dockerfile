@@ -20,7 +20,7 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 ARG DEVEXPRESS_LICENSE
-ENV DEVEXPRESS_LICENSE=$DEVEXPRESS_LICENSE
+ENV DevExpress_License=$DEVEXPRESS_LICENSE
 WORKDIR /src
 COPY ["NDS_REPORT/NDS_REPORT.csproj", "NDS_REPORT/"]
 RUN dotnet restore "./NDS_REPORT/NDS_REPORT.csproj"
@@ -32,7 +32,7 @@ RUN dotnet build "./NDS_REPORT.csproj" -c $BUILD_CONFIGURATION -o /app/build
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 ARG DEVEXPRESS_LICENSE
-ENV DEVEXPRESS_LICENSE=$DEVEXPRESS_LICENSE
+ENV DevExpress_License=$DEVEXPRESS_LICENSE
 RUN dotnet publish "./NDS_REPORT.csproj" -c $BUILD_CONFIGURATION -r linux-x64 -o /app/publish /p:UseAppHost=false
 
 # 此阶段在生产中使用，或在常规模式下从 VS 运行时使用(在不使用调试配置时为默认值)
