@@ -1,7 +1,8 @@
-﻿using System;
+﻿using NDS.Report.models;
+using SqlSugar;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SqlSugar;
 namespace NDS.Report.Models
 {
     /// <summary>
@@ -115,6 +116,9 @@ namespace NDS.Report.Models
 
         [Navigate(NavigateType.OneToMany, nameof(NoriDetection.NoriId))]
         public required List<NoriDetection> Detections { get; set; }
+
+        [Navigate(NavigateType.OneToOne, nameof(UserId))]
+        public required Users User { get; set; }
 
     }
     

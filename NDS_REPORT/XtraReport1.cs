@@ -4,13 +4,14 @@ using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace NDS_REPORT
+namespace NDS.Report
 {
     public partial class XtraReport1 : DevExpress.XtraReports.UI.XtraReport
     {
         public XtraReport1()
         {
             InitializeComponent();
+            
         }
     }
 }

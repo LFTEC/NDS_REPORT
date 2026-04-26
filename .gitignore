@@ -363,4 +363,3 @@ MigrationBackup/
 FodyWeavers.xsd
 
 appsettings.*.json
-/NDS_REPORT/appsettings.Development.json

@@ -55,7 +55,7 @@ namespace NDS.Report.Models
         public string? Mimetype  { get; set;  }
 
         [Navigate(NavigateType.OneToOne, nameof(CategoryId))]
-        public DetectionCategory? CategoryInfo { get; set; }
+        public required DetectionCategory CategoryInfo { get; set; }
     }
     
 }
