@@ -2,6 +2,23 @@
 
 # 此阶段用于在快速模式(默认为调试配置)下从 VS 运行时
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
+USER root
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+    libc6 \
+    libicu-dev \
+    libfontconfig1 \
+    libfreetype6 \
+    libharfbuzz0b \
+    libpng16-16 \
+    libjpeg62-turbo \
+    libcups2 \
+    fontconfig \
+    && rm -rf /var/lib/apt/lists/*
+COPY ["NDS_REPORT/fonts/*", "/usr/local/share/fonts/"]
+RUN fc-cache -vf
+
+FROM base AS base2
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -25,7 +42,7 @@ ENV DEVEXPRESS_LICENSE=$DEVEXPRESS_LICENSE
 RUN dotnet publish "./NDS_REPORT.csproj" -c $BUILD_CONFIGURATION -r linux-x64 -o /app/publish /p:UseAppHost=false
 
 # 此阶段在生产中使用，或在常规模式下从 VS 运行时使用(在不使用调试配置时为默认值)
-FROM base AS final
+FROM base2 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "NDS_REPORT.dll"]
