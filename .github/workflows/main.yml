@@ -6,8 +6,6 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    env:
-      DEVEXPRESS_LICENSE: ${{ secrets.DEVEXPRESS_LICENSE_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -35,6 +33,6 @@ jobs:
           context: .
           file: ./NDS_REPORT/Dockerfile
           build-args: |
-            DEVEXPRESS_LICENSE=${{ env.DEVEXPRESS_LICENSE }}
+            DEVEXPRESS_LICENSE=${{ secrets.DEVEXPRESS_LICENSE_KEY }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}

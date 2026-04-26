@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <RootNamespace>NDS.Report</RootNamespace>
+    <UserSecretsId>23018ebc-cf9f-45e8-a2f3-4f18cf29a2c8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
