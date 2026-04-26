@@ -28,14 +28,12 @@ jobs:
         with:
           username: ${{ secrets.dockerhub_username }}
           password: ${{ secrets.dockerhub_password }}
-      
-      - name: Get Dockerfile
-        run: |
-          cp NDS_REPORT/Dockerfile .
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v7
         with:
+          context: .
+          file: ./NDS_REPORT/Dockerfile
           build-args: |
             DEVEXPRESS_LICENSE=${{ env.DEVEXPRESS_LICENSE }}
           push: true
