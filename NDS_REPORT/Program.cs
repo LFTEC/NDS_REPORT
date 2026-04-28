@@ -32,7 +32,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 
-app.MapGet("/report", (ISqlSugarClient db, string batchNo) =>
+app.MapGet("/report", (ISqlSugarClient db, HttpContext context, string batchNo) =>
 {
     if(string.IsNullOrEmpty(batchNo))
         return Results.BadRequest("BatchNo is required.");
@@ -56,7 +56,10 @@ app.MapGet("/report", (ISqlSugarClient db, string batchNo) =>
         using (var stream = new MemoryStream())
         {
             report1.ExportToPdf(stream);
-            return Results.File(stream.ToArray(), "application/pdf", $"report_{batchNo}.pdf");
+            var filename = $"report_{batchNo}.pdf";
+            var encodeFilename = Uri.EscapeDataString(filename);
+            context.Response.Headers.ContentDisposition = $"inline; filename=\"{encodeFilename}\"; filename*=UTF-8''{encodeFilename}";
+            return Results.File(stream.ToArray(), "application/pdf");
         }
     }
 });
@@ -141,7 +144,7 @@ static NDS.Report.DTO.NoriInfo MapToDto(NoriInfo nori)
             if (dIndicator.DetectionResult == "N")
                 dIndicator.Value = "未检测";
             else if(dIndicator.DetectionResult == "I")
-                dIndicator.Value = "N/A";
+                dIndicator.Value = "未检测";
             else
             {
                 if (indicator.Type == "T")
